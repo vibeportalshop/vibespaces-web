@@ -1,355 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VibeSpaces — Better corners of the internet</title>
-  <link rel="icon" href="Spaces.png">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #07070c;
-      --text: #f4f4f8;
-      --muted: #a1a1b5;
-      --pink: #f472b6;
-      --purple: #c084fc;
-      --blue: #60a5fa;
-      --teal: #2dd4bf;
-      --orange: #fb923c;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image" href="Spaces.png" >
+<title>VibeSpaces — Better corners of the internet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  :root{
+    --bg:#1c1822;
+    --bg-2:#241f2c;
+    --bg-3:#2c2634;
+    --ink:#f4eee2;
+    --ink-dim:#c6bdc9;
+    --ink-faint:#8c8391;
+    --amber:#e8a33d;      --amber-dk:#3d2a0c;
+    --coral:#e97c5d;      --coral-dk:#3d1b10;
+    --sage:#8fae7d;       --sage-dk:#1e2f17;
+    --peri:#8c93e8;       --peri-dk:#191c3d;
+    --rose:#d46fa0;       --rose-dk:#3d1729;
+    --line:rgba(244,238,226,0.12);
+    --line-soft:rgba(244,238,226,0.07);
+  }
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:999; pointer-events:none; opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  ::selection{ background:var(--coral); color:#2b100a; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
 
-    h1, h2, h3 {
-      font-family: 'Outfit', sans-serif;
-      line-height: 1.15;
-    }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--ink-faint);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--ink-faint); display:inline-block; }
 
-    .container {
-      width: min(1120px, 92%);
-      margin: 0 auto;
-    }
+  em{ font-family:'Fraunces', serif; font-style:italic; font-weight:500; }
 
-    /* Header */
-    header {
-      padding: 22px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      z-index: 10;
-    }
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    backdrop-filter:blur(14px);
+    background:rgba(28,24,34,0.72);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav{ max-width:1180px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; }
+  .logo{ font-family:'Fraunces', serif; font-size:20px; font-weight:500; display:flex; align-items:center; gap:10px; }
+  .logo-dots{ display:flex; gap:3px; }
+  .logo-dots span{ width:6px; height:6px; border-radius:50%; display:inline-block; }
+  .logo-dots span:nth-child(1){ background:var(--amber); }
+  .logo-dots span:nth-child(2){ background:var(--coral); margin-top:-4px; }
+  .logo-dots span:nth-child(3){ background:var(--peri); }
+  .nav-links{ display:flex; align-items:center; gap:28px; font-size:14px; }
+  .nav-links a.ghost{ color:var(--ink-dim); transition:color .2s; }
+  .nav-links a.ghost:hover{ color:var(--ink); }
+  .btn{
+    font-family:'Inter', sans-serif; font-size:14px; font-weight:500;
+    padding:10px 20px; border-radius:100px; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, background .25s, border-color .25s;
+    cursor:pointer; border:1px solid transparent; white-space:nowrap;
+  }
+  .btn-fill{ background:var(--coral); color:#2b100a; }
+  .btn-fill:hover{ background:#f0916f; transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(233,124,93,0.5); }
+  .btn-line{ border-color:var(--line); color:var(--ink); }
+  .btn-line:hover{ border-color:var(--ink-dim); background:rgba(244,238,226,0.04); transform:translateY(-2px); }
 
-    .logo {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      text-decoration: none;
-      background: linear-gradient(90deg, #c084fc, #60a5fa, #2dd4bf);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  /* ---------- HERO ---------- */
+  .hero{ position:relative; min-height:100vh; display:flex; align-items:center; padding-top:110px; overflow:hidden; }
+  .glow{
+    position:absolute;
+    top:calc(var(--my, 25%) - 300px); left:calc(var(--mx, 15%) - 300px);
+    width:600px; height:600px;
+    background:radial-gradient(circle, rgba(233,124,93,0.16) 0%, rgba(140,147,232,0.08) 45%, transparent 72%);
+    pointer-events:none; transition:left .6s ease-out, top .6s ease-out; filter:blur(10px);
+  }
+  .glow-static{
+    position:absolute; bottom:-220px; right:-180px; width:560px; height:560px;
+    background:radial-gradient(circle, rgba(143,174,125,0.13) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; z-index:2; width:100%; display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center; }
+  .hero h1{
+    font-family:'Fraunces', serif; font-weight:400; font-size:clamp(40px, 5.6vw, 76px);
+    line-height:1.05; letter-spacing:-0.01em; margin:22px 0 26px; color:var(--ink);
+  }
+  .corners-grad{
+    background:linear-gradient(90deg, var(--amber), var(--coral) 45%, var(--peri) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    font-style:italic;
+  }
+  .hero p.lede{ font-size:18px; color:var(--ink-dim); max-width:500px; margin-bottom:28px; }
 
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-    }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; padding:7px 14px;
+    border-radius:100px; font-weight:500; letter-spacing:0.01em;
+    transform:rotate(var(--r,0deg));
+  }
+  .chip:nth-child(1){ background:var(--amber); color:var(--amber-dk); --r:-2deg; }
+  .chip:nth-child(2){ background:var(--coral); color:var(--coral-dk); --r:1.5deg; }
+  .chip:nth-child(3){ background:var(--sage); color:var(--sage-dk); --r:-1deg; }
+  .chip:nth-child(4){ background:var(--peri); color:var(--peri-dk); --r:2deg; }
+  .chip:nth-child(5){ background:var(--rose); color:var(--rose-dk); --r:-1.5deg; }
 
-    .btn {
-      padding: 11px 24px;
-      border-radius: 100px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: all 0.25s ease;
-    }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-lg{ padding:14px 26px; font-size:15px; }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #c084fc, #60a5fa);
-      color: white;
-    }
+  .room{ position:relative; aspect-ratio:1/1.05; max-width:420px; justify-self:end; }
+  .room svg{ width:100%; height:100%; overflow:visible; }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(192, 132, 252, 0.35);
-    }
+  .scroll-cue{
+    position:absolute; bottom:34px; left:32px; display:flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint); z-index:2;
+  }
+  .scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--ink-faint), transparent); animation:draw 2.4s ease-in-out infinite; }
+  @keyframes draw{ 0%,100%{ opacity:0.3; } 50%{ opacity:1; } }
 
-    .btn-ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
+  section{ position:relative; padding:130px 0; }
+  .divider{ height:1px; background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent); }
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.1,1), transform .9s cubic-bezier(.2,.7,.1,1); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
 
-    .btn-ghost:hover {
-      border-color: #c084fc;
-      color: #c084fc;
-    }
+  /* ---------- VISION ---------- */
+  .vision{ background:var(--bg-2); }
+  .vision-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:start; }
+  .vision-grid .eyebrow{ margin-bottom:24px; }
+  .pull{
+    font-family:'Fraunces', serif; font-weight:400; font-style:italic;
+    font-size:clamp(26px, 3vw, 38px); line-height:1.28; color:var(--ink);
+  }
+  .pull .c1{ color:var(--coral); }
+  .pull .c2{ color:var(--peri); }
+  .vision-body p{ color:var(--ink-dim); font-size:16.5px; margin-bottom:20px; max-width:520px; }
+  .vision-body p:last-child{ margin-bottom:0; }
 
-    /* Hero */
-    .hero {
-      padding: 90px 0 70px;
-      text-align: center;
-      position: relative;
-    }
+  /* ---------- FEATURES ---------- */
+  .features .head{ max-width:640px; margin-bottom:64px; }
+  .features h2{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(30px, 3.6vw, 46px); margin-top:20px; line-height:1.1; }
+  .cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); border-radius:18px; overflow:hidden; }
+  .card{ background:var(--bg); padding:44px 34px 40px; position:relative; transition:background .3s; border-top:3px solid var(--accent); }
+  .card:hover{ background:var(--bg-3); }
+  .card-icon{ width:46px; height:46px; margin-bottom:28px; color:var(--accent); }
+  .card h3{ font-family:'Fraunces', serif; font-weight:500; font-size:22px; margin-bottom:12px; }
+  .card p{ color:var(--ink-dim); font-size:15px; }
+  .card:nth-child(1){ --accent:var(--coral); }
+  .card:nth-child(2){ --accent:var(--peri); }
+  .card:nth-child(3){ --accent:var(--sage); }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(192,132,252,0.18) 0%, transparent 70%);
-      pointer-events: none;
-    }
+  /* ---------- CTA ---------- */
+  .cta{ background:var(--bg-2); text-align:center; overflow:hidden; position:relative; }
+  .cta-glow{
+    position:absolute; top:50%; left:50%; width:920px; height:920px; transform:translate(-50%,-50%);
+    background:conic-gradient(from 0deg, rgba(232,163,61,0.14), rgba(233,124,93,0.14), rgba(140,147,232,0.14), rgba(143,174,125,0.14), rgba(212,111,160,0.14), rgba(232,163,61,0.14));
+    border-radius:50%; filter:blur(60px); pointer-events:none;
+  }
+  .cta-inner{ position:relative; z-index:2; }
+  .cta h2{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(32px, 5vw, 58px); margin:22px 0 18px; line-height:1.08; }
+  .cta p{ color:var(--ink-dim); font-size:17px; margin-bottom:38px; }
+  .cta .eyebrow{ justify-content:center; }
+  .cta .eyebrow::before{ display:none; }
 
-    .hero-badge {
-      display: inline-block;
-      padding: 7px 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 100px;
-      font-size: 0.9rem;
-      color: #c084fc;
-      margin-bottom: 28px;
-    }
+  footer{ padding:48px 0 40px; border-top:1px solid var(--line-soft); }
+  .foot-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .foot-left{ font-family:'Fraunces', serif; font-style:italic; color:var(--ink-dim); font-size:15px; display:flex; align-items:center; gap:8px; }
+  .foot-right{ text-align:right; font-size:12.5px; color:var(--ink-faint); line-height:1.7; }
 
-    .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 4.4rem);
-      font-weight: 800;
-      max-width: 850px;
-      margin: 0 auto 24px;
-      letter-spacing: -0.03em;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(90deg, #f472b6, #c084fc, #60a5fa, #2dd4bf);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.25rem;
-      color: var(--muted);
-      max-width: 580px;
-      margin: 0 auto 42px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* Vision Section */
-    .vision {
-      padding: 40px 0 90px;
-    }
-
-    .vision-card {
-      background: linear-gradient(135deg, rgba(192,132,252,0.1), rgba(45,212,191,0.08));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 28px;
-      padding: 50px 40px;
-      text-align: center;
-    }
-
-    .vision-card h2 {
-      font-size: 2.1rem;
-      margin-bottom: 18px;
-    }
-
-    .vision-card p {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    /* Features */
-    .features {
-      padding: 40px 0 100px;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    .section-header h2 {
-      font-size: 2.2rem;
-      margin-bottom: 12px;
-    }
-
-    .section-header p {
-      color: var(--muted);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-    }
-
-    .feature-card {
-      background: #12121a;
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      padding: 32px 28px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .feature-card:nth-child(1):hover { border-color: #f472b6; }
-    .feature-card:nth-child(2):hover { border-color: #c084fc; }
-    .feature-card:nth-child(3):hover { border-color: #2dd4bf; }
-
-    .feature-icon {
-      font-size: 1.8rem;
-      margin-bottom: 16px;
-    }
-
-    .feature-card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    /* Bottom CTA */
-    .bottom-cta {
-      text-align: center;
-      padding: 80px 0;
-    }
-
-    .bottom-cta h2 {
-      font-size: 2.4rem;
-      margin-bottom: 16px;
-    }
-
-    .bottom-cta p {
-      color: var(--muted);
-      margin-bottom: 32px;
-      font-size: 1.1rem;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 35px 0;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    footer .credit {
-      margin-top: 8px;
-      font-size: 0.82rem;
-      opacity: 0.7;
-    }
-
-    @media (max-width: 600px) {
-      .hero { padding: 70px 0 50px; }
-      .vision-card { padding: 36px 24px; }
-    }
-  </style>
+  @media (max-width: 880px){
+    .hero-inner{ grid-template-columns:1fr; }
+    .room{ justify-self:center; max-width:280px; margin-top:20px; }
+    .vision-grid{ grid-template-columns:1fr; gap:32px; }
+    .cards{ grid-template-columns:1fr; }
+    .nav-links .ghost{ display:none; }
+    section{ padding:88px 0; }
+    .foot-row{ flex-direction:column; align-items:flex-start; }
+    .foot-right{ text-align:left; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header -->
-    <header>
-      <a href="info.html" class="logo">VibeSpaces</a>
-      <div class="nav-buttons">
-        <a href="spaces.html" class="btn btn-ghost">Sign In</a>
-        <a href="spaces.html" class="btn btn-primary">Get Started</a>
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="logo-dots"><span></span><span></span><span></span></span>VibeSpaces</div>
+    <div class="nav-links">
+      <a href="https://vibeportalshop.github.io/vibespaces-web/spaces.html" class="ghost">Sign in</a>
+      <a href="https://vibeportalshop.github.io/vibespaces-web/spaces.html" class="btn btn-fill">Get started</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="hero">
+  <div class="glow"></div>
+  <div class="glow-static"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">Room for every mind</div>
+      <h1>We're building better <em class="corners-grad">corners</em><br>of the internet</h1>
+      <p class="lede">VibeSpaces is where real thoughts get written, not performed. Whether you're a night thinker, a plain talker, or a quiet observer, there's a corner here built for how your mind actually works.</p>
+      <div class="chips">
+        <span class="chip">the night thinkers</span>
+        <span class="chip">the plain talkers</span>
+        <span class="chip">the quiet observers</span>
+        <span class="chip">the over-explainers</span>
+        <span class="chip">the one-liners</span>
       </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-badge">A new kind of social space</div>
-      <h1>We’re building <span>better corners</span><br>of the internet</h1>
-      <p>VibeSpaces is a place for real thoughts, honest conversations, and meaningful connections — without the noise, pressure, or chaos.</p>
-      <div class="hero-buttons">
-        <a href="spaces.html" class="btn btn-primary">Start Exploring</a>
-        <a href="#vision" class="btn btn-ghost">Our Vision</a>
+      <div class="hero-ctas">
+        <a href="https://vibeportalshop.github.io/vibespaces-web/spaces.html" class="btn btn-fill btn-lg">Start exploring →</a>
+        <a href="#vision" class="btn btn-line btn-lg">Our vision</a>
       </div>
-    </section>
-
-    <!-- Vision -->
-    <section class="vision" id="vision">
-      <div class="vision-card">
-        <h2>Not just another platform</h2>
-        <p>Most of the internet is loud, addictive, and designed to keep you scrolling. VibeSpaces is being built differently — as a calmer, more human space where people can actually express themselves and connect with intention.</p>
-      </div>
-    </section>
-
-    <!-- Features -->
-    <section class="features">
-      <div class="section-header">
-        <h2>What makes it different</h2>
-        <p>Designed for expression, not addiction</p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">✨</div>
-          <h3>Write with freedom</h3>
-          <p>Share thoughts, stories, advice, or feelings in a clean space that respects your voice.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🌊</div>
-          <h3>Real conversations</h3>
-          <p>Comment and connect without algorithms pushing noise or outrage.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🌱</div>
-          <h3>Growing with care</h3>
-          <p>We’re building this slowly and intentionally — focused on quality over scale.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bottom CTA -->
-    <section class="bottom-cta">
-      <h2>Ready to experience a better corner?</h2>
-      <p>Join early and be part of something different.</p>
-      <a href="spaces.html" class="btn btn-primary">Join VibeSpaces</a>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <p>© 2026 VibeSpaces</p>
-      <p class="credit">Developed & distributed by Vibe Cartel Inc. · Powered by Grok</p>
-    </footer>
+    </div>
+    <div class="room" aria-hidden="true">
+      <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="40" width="340" height="340" rx="4" stroke="var(--line)" stroke-width="1"/>
+        <line x1="30" y1="230" x2="370" y2="230" stroke="var(--line)" stroke-width="1"/>
+        <rect x="70" y="80" width="140" height="110" rx="2" stroke="var(--ink-faint)" stroke-width="1" opacity="0.5"/>
+        <line x1="140" y1="80" x2="140" y2="190" stroke="var(--ink-faint)" stroke-width="1" opacity="0.5"/>
+        <line x1="70" y1="135" x2="210" y2="135" stroke="var(--ink-faint)" stroke-width="1" opacity="0.5"/>
+        <path d="M280 280 Q292 220 280 190" stroke="var(--sage)" stroke-width="1.4" fill="none"/>
+        <path d="M280 280 Q268 230 280 200" stroke="var(--sage)" stroke-width="1.2" fill="none" opacity="0.7"/>
+        <ellipse cx="280" cy="286" rx="24" ry="8" stroke="var(--ink-faint)" stroke-width="1"/>
+        <line x1="120" y1="230" x2="120" y2="330" stroke="var(--ink-faint)" stroke-width="1.4"/>
+        <path d="M100 330 h40 l-6 34 h-28 z" stroke="var(--ink-faint)" stroke-width="1.4" fill="none"/>
+        <circle cx="120" cy="180" r="34" fill="url(#lampAmber)"/>
+        <path d="M120 150 L96 195 H144 Z" stroke="var(--amber)" stroke-width="1.6" fill="rgba(232,163,61,0.08)"/>
+        <line x1="120" y1="195" x2="120" y2="230" stroke="var(--amber)" stroke-width="1.6"/>
+        <ellipse cx="120" cy="232" rx="16" ry="5" stroke="var(--amber)" stroke-width="1.4"/>
+        <circle cx="300" cy="120" r="20" fill="url(#lampPeri)"/>
+        <circle cx="300" cy="120" r="4.5" fill="var(--peri)"/>
+        <circle cx="65" cy="255" r="16" fill="url(#lampCoral)"/>
+        <circle cx="65" cy="255" r="4" fill="var(--coral)"/>
+        <defs>
+          <radialGradient id="lampAmber" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="rgba(232,163,61,0.5)"/><stop offset="100%" stop-color="rgba(232,163,61,0)"/></radialGradient>
+          <radialGradient id="lampPeri" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="rgba(140,147,232,0.45)"/><stop offset="100%" stop-color="rgba(140,147,232,0)"/></radialGradient>
+          <radialGradient id="lampCoral" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="rgba(233,124,93,0.45)"/><stop offset="100%" stop-color="rgba(233,124,93,0)"/></radialGradient>
+        </defs>
+      </svg>
+    </div>
   </div>
+  <div class="scroll-cue"><span class="line"></span>Scroll</div>
+</section>
+
+<div class="divider wrap"></div>
+
+<section class="vision" id="vision">
+  <div class="wrap vision-grid reveal">
+    <div>
+      <div class="eyebrow">Why we're different</div>
+      <p class="pull">Most of the internet is built to keep you <span class="c1">scrolling.</span> We're building somewhere every kind of mind can <span class="c2">stop.</span></p>
+    </div>
+    <div class="vision-body">
+      <p>Feeds today are loud, addictive, engineered to hijack attention — every ranking, notification, and red dot designed to pull you back in, not to help you think or connect.</p>
+      <p>VibeSpaces takes the opposite approach. We're building slowly and deliberately, for people who want to actually say something and be heard — in whatever shape that takes, for whoever they are.</p>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow">What makes it different</div>
+      <h2>Designed for expression, not addiction</h2>
+    </div>
+    <div class="cards reveal">
+      <div class="card">
+        <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 38 L34 14 L38 18 L14 42 L8 44 Z"/><path d="M28 20 L32 24"/><path d="M6 44 L10 38"/></svg>
+        <h3>Write with freedom</h3>
+        <p>Share thoughts, stories, advice, or feelings in a clean space that respects your voice — no character-count games, no engagement bait.</p>
+      </div>
+      <div class="card">
+        <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 26 Q10 16 16 26 T28 26 T40 26"/><path d="M4 34 Q10 24 16 34 T28 34 T40 34"/></svg>
+        <h3>Real conversations</h3>
+        <p>Comment and connect without an algorithm deciding what's worth seeing. What you read is what people actually wrote.</p>
+      </div>
+      <div class="card">
+        <svg class="card-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M24 44 V22"/><path d="M24 22 C24 12 14 12 10 6 C10 18 16 22 24 22 Z"/><path d="M24 28 C24 20 32 20 36 14 C36 24 30 28 24 28 Z"/></svg>
+        <h3>Growing with care</h3>
+        <p>We're building this slowly and intentionally, focused on the quality of the space over the size of it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-glow"></div>
+  <div class="wrap cta-inner reveal">
+    <div class="eyebrow">Ready when you are</div>
+    <h2>Ready to find your corner?</h2>
+    <p>Join early and help shape a better corner of the internet — whatever shape that takes for you.</p>
+    <a href="https://vibeportalshop.github.io/vibespaces-web/spaces.html" class="btn btn-fill btn-lg">Join VibeSpaces →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="foot-left"><span class="logo-dots"><span></span><span></span><span></span></span>VibeSpaces</div>
+    <div class="foot-right">
+      © 2026 VibeSpaces<br>
+      Developed &amp; distributed by Vibe Cartel Inc. · Powered by Grok
+    </div>
+  </div>
+</footer>
+
+<script>
+  var hero = document.getElementById('hero');
+  var canHover = window.matchMedia('(pointer: fine)').matches;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canHover && !reduceMotion) {
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      var x = ((e.clientX - r.left) / r.width) * 100;
+      var y = ((e.clientY - r.top) / r.height) * 100;
+      hero.style.setProperty('--mx', x + '%');
+      hero.style.setProperty('--my', y + '%');
+    });
+  }
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+</script>
 
 </body>
 </html>
